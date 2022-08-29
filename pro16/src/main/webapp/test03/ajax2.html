@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+	function fn_process() {
+		$.ajax({
+			type:"get",
+			dataType:"xml",
+			async:false,
+			url:"http://localhost:8080/pro16/ajaxTest2",
+			success:function (info,textStatus) {
+				$(info).find("book").each(function() {
+					var title=$(this).find("title").text();
+					var writer=$(this).find("writer").text();
+					var image=$(this).find("image").text();
+					$("#bookInfo").append(
+						"<p>" +title+ "</p>"+		
+						"<p>" +writer+ "</p>"+		
+						"<img src="+image+" />"		
+					);
+				});
+			},error:function (data,textStatus,error) {
+				alert(error);
+			},
+			complete:function (data,textStatus) {
+				alert("작업을 완료했습니다.");
+			}
+
+		});
+	}
+</script>
+</head>
+<body>
+	<input type="button" value="전송하기" onclick="fn_process()" /> <br><br>
+	<div id="bookInfo"></div>
+</body>
+</html>
